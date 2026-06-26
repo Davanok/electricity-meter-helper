@@ -8,8 +8,8 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import kotlin.uuid.Uuid
 
-val ViewModelsModule = module {
+fun viewModelsModule() = module {
     viewModelOf(::HomeViewModel)
-    viewModel<InfoViewModel> { (entryId: Uuid) -> InfoViewModel(entryId) }
-    viewModel<ReadingViewModel> { (entryId: Uuid) -> ReadingViewModel(entryId) }
+    viewModel<InfoViewModel> { (entryId: Uuid) -> InfoViewModel(entryId, get()) }
+    viewModel<ReadingViewModel> { (entryId: Uuid) -> ReadingViewModel(entryId, get()) }
 }

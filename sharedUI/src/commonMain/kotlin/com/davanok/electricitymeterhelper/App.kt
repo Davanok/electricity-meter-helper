@@ -4,8 +4,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.davanok.electricitymeterhelper.di.AppModule
-import com.davanok.electricitymeterhelper.di.ViewModelsModule
+import com.davanok.electricitymeterhelper.di.appModule
+import com.davanok.electricitymeterhelper.di.platformModule
+import com.davanok.electricitymeterhelper.di.viewModelsModule
 import com.davanok.electricitymeterhelper.theme.AppTheme
 import com.davanok.electricitymeterhelper.ui.navigation.NavigationGraph
 import org.koin.compose.KoinApplication
@@ -19,8 +20,9 @@ fun App(
     KoinApplication(
         configuration = koinConfiguration {
             modules(
-                AppModule,
-                ViewModelsModule
+                appModule(),
+                viewModelsModule(),
+                platformModule()
             )
         }
     ) {

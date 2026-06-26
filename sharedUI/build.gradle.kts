@@ -16,7 +16,7 @@ kotlin {
     android {
         namespace = "com.davanok.electricitymeterhelper"
         compileSdk = 36
-        minSdk = 23
+        minSdk = 24
         androidResources.enable = true
         compilerOptions { jvmTarget = JvmTarget.JVM_17 }
     }
@@ -47,9 +47,12 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel.navigation3)
             implementation(libs.compose.nav3)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.serialization.protobuf)
+            implementation(libs.kotlinx.serialization.csv)
             implementation(libs.materialKolor)
 
             implementation(libs.bundles.koin)
+            implementation(libs.kotlinx.io)
         }
 
         commonTest.dependencies {
@@ -65,6 +68,7 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
+            implementation(libs.app.dirs)
         }
 
         webMain.dependencies {
@@ -91,6 +95,5 @@ dependencies {
 }
 
 buildConfig {
-    // BuildConfig configuration here.
-    // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
+    buildConfigField("APP_NAME", "electricity meter helper")
 }

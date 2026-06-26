@@ -11,9 +11,12 @@ androidx-lifecycle = "2.11.0-beta02"
 androidx-nav3 = "1.1.1"
 nav3-browser = "1.1.0"
 kotlinx-serialization = "1.11.0"
+serialization-csv = "0.0.23"
 koin = "4.2.2"
 buildConfig = "6.0.10"
 materialKolor = "4.1.1"
+kotlinx-io = "0.9.0"
+app-dirs = "2.0.0"
 
 [libraries]
 
@@ -37,10 +40,14 @@ androidx-lifecycle-viewmodel-navigation3 = { module = "org.jetbrains.androidx.li
 compose-nav3 = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "androidx-nav3" }
 nav3-browser = { module = "com.github.terrakok:navigation3-browser", version.ref = "nav3-browser" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlinx-serialization" }
+kotlinx-serialization-csv = { module = "app.softwork:kotlinx-serialization-csv", version.ref = "serialization-csv" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+kotlinx-io = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinx-io" }
+app-dirs = { module = "ca.gosyer:kotlin-multiplatform-appdirs", version.ref = "app-dirs" }
 
 [plugins]
 
