@@ -1,13 +1,9 @@
 package com.davanok.electricitymeterhelper.androidApp
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowInsetsControllerCompat
 import com.davanok.electricitymeterhelper.App
 
@@ -15,17 +11,12 @@ class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent { 
-            App(onThemeChanged = { ThemeChanged(it) }) 
+        setContent {
+            App(onThemeChanged = ::onThemeChanged)
         }
     }
-}
 
-@Composable
-private fun ThemeChanged(isDark: Boolean) {
-    val view = LocalView.current
-    LaunchedEffect(isDark) {
-        val window = (view.context as Activity).window
+    private fun onThemeChanged(isDark: Boolean) {
         WindowInsetsControllerCompat(window, window.decorView).apply {
             isAppearanceLightStatusBars = isDark
             isAppearanceLightNavigationBars = isDark

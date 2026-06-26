@@ -14,7 +14,7 @@ internal val LocalThemeIsDark = compositionLocalOf { mutableStateOf(true) }
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun AppTheme(
-    onThemeChanged: @Composable (isDark: Boolean) -> Unit,
+    onThemeChanged: (isDark: Boolean) -> Unit,
     content: @Composable () -> Unit
 ) {
     val systemIsDark = isSystemInDarkTheme()
@@ -23,7 +23,9 @@ internal fun AppTheme(
         LocalThemeIsDark provides isDarkState
     ) {
         val isDark by isDarkState
-        onThemeChanged(!isDark)
+        LaunchedEffect(isDark) {
+            onThemeChanged(!isDark)
+        }
         MaterialTheme(
             colorScheme = if (isDark) darkColorScheme() else expressiveLightColorScheme(),
             content = { Surface(content = content) }

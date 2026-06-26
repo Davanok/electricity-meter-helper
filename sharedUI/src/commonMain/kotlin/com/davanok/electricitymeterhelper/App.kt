@@ -4,18 +4,29 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.davanok.electricitymeterhelper.di.AppModule
 import com.davanok.electricitymeterhelper.theme.AppTheme
 import com.davanok.electricitymeterhelper.ui.navigation.NavigationGraph
+import org.koin.compose.KoinApplication
+import org.koin.dsl.koinConfiguration
 
-@Preview
+
 @Composable
 fun App(
-    onThemeChanged: @Composable (isDark: Boolean) -> Unit = {}
-) = AppTheme(onThemeChanged) {
-    Scaffold { paddingValues ->
-        NavigationGraph(
-            modifier = Modifier.padding(paddingValues)
-        )
+    onThemeChanged: (isDark: Boolean) -> Unit = {},
+) {
+    KoinApplication(
+        configuration = koinConfiguration {
+            modules(AppModule)
+        }
+    ) {
+
+    }
+    AppTheme(onThemeChanged) {
+        Scaffold { paddingValues ->
+            NavigationGraph(
+                modifier = Modifier.padding(paddingValues)
+            )
+        }
     }
 }

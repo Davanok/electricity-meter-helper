@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -8,16 +9,13 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.android.kmp.library)
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.metro)
-    alias(libs.plugins.room)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.buildConfig)
 }
 
 kotlin {
     android {
         namespace = "com.davanok.electricitymeterhelper"
-        compileSdk = 36
+        compileSdk = 37
         minSdk = 23
         androidResources.enable = true
         compilerOptions { jvmTarget = JvmTarget.JVM_17 }
@@ -28,6 +26,7 @@ kotlin {
     }
 
     js { browser() }
+    @OptIn(ExperimentalWasmDsl::class)
     wasmJs { browser() }
 
     iosArm64()
@@ -48,8 +47,9 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel.navigation3)
             implementation(libs.compose.nav3)
             implementation(libs.kotlinx.serialization.json)
-            implementation(libs.room.runtime)
             implementation(libs.materialKolor)
+
+            implementation(libs.bundles.koin)
         }
 
         commonTest.dependencies {
@@ -93,17 +93,4 @@ dependencies {
 buildConfig {
     // BuildConfig configuration here.
     // https://github.com/gmazzo/gradle-buildconfig-plugin#usage-in-kts
-}
-
-room {
-    schemaDirectory("$projectDir/schemas")
-}
-
-dependencies {
-    with(libs.room.compiler) {
-        add("kspAndroid", this)
-        add("kspJvm", this)
-        add("kspIosArm64", this)
-        add("kspIosSimulatorArm64", this)
-    }
 }
