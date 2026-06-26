@@ -20,7 +20,7 @@ fun NavigationGraph(
             entry<Route.Home> {
 
             }
-            entry<Route.Data> {
+            entry<Route.Info> {
 
             }
             entry<Route.Reading> {

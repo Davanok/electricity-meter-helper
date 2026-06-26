@@ -7,7 +7,7 @@ sealed interface Route {
     @Serializable
     data object Home : Route
     @Serializable
-    data class Data(val id: Int) : Route
+    data class Info(val id: Int) : Route
     @Serializable
     data object Reading : Route
 }

@@ -15,7 +15,7 @@ plugins {
 kotlin {
     android {
         namespace = "com.davanok.electricitymeterhelper"
-        compileSdk = 37
+        compileSdk = 36
         minSdk = 23
         androidResources.enable = true
         compilerOptions { jvmTarget = JvmTarget.JVM_17 }
