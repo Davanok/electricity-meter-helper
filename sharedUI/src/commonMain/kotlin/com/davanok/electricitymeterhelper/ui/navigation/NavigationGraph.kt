@@ -5,6 +5,9 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import com.davanok.electricitymeterhelper.ui.screens.home.HomeScreen
+import com.davanok.electricitymeterhelper.ui.screens.info.InfoScreen
+import com.davanok.electricitymeterhelper.ui.screens.reading.ReadingScreen
 
 @Composable
 fun NavigationGraph(
@@ -18,13 +21,28 @@ fun NavigationGraph(
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
             entry<Route.Home> {
-
+                HomeScreen(
+                    navigateToInfo = { backStack.add(Route.Info(it)) },
+                    navigateToReading = { backStack.add(Route.Reading) }
+                )
             }
             entry<Route.Info> {
-
+                InfoScreen(
+                    navigateToHome = {
+                        backStack.clear()
+                        backStack.add(Route.Home)
+                    },
+                    navigateToReading = { backStack.add(Route.Reading) }
+                )
             }
             entry<Route.Reading> {
-
+                ReadingScreen(
+                    navigateToHome = {
+                        backStack.clear()
+                        backStack.add(Route.Home)
+                                     },
+                    navigateToInfo = { backStack[backStack.lastIndex] = Route.Info(it) }
+                )
             }
         }
     )
