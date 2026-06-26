@@ -5,7 +5,8 @@ import androidx.compose.runtime.Composable
 @Composable
 fun InfoScreen(
     navigateToHome: () -> Unit,
-    navigateToReading: () -> Unit
+    navigateToReading: () -> Unit,
+    viewModel: InfoViewModel
 ) {
 
 }

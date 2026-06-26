@@ -8,6 +8,9 @@ import androidx.navigation3.ui.NavDisplay
 import com.davanok.electricitymeterhelper.ui.screens.home.HomeScreen
 import com.davanok.electricitymeterhelper.ui.screens.info.InfoScreen
 import com.davanok.electricitymeterhelper.ui.screens.reading.ReadingScreen
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
+import kotlin.uuid.Uuid
 
 @Composable
 fun NavigationGraph(
@@ -23,25 +26,28 @@ fun NavigationGraph(
             entry<Route.Home> {
                 HomeScreen(
                     navigateToInfo = { backStack.add(Route.Info(it)) },
-                    navigateToReading = { backStack.add(Route.Reading) }
+                    navigateToReading = { backStack.add(Route.Reading(Uuid.random())) },
+                    viewModel = koinViewModel()
                 )
             }
-            entry<Route.Info> {
+            entry<Route.Info> { (entryId: Uuid) ->
                 InfoScreen(
                     navigateToHome = {
                         backStack.clear()
                         backStack.add(Route.Home)
                     },
-                    navigateToReading = { backStack.add(Route.Reading) }
+                    navigateToReading = { backStack.add(Route.Reading(entryId)) },
+                    viewModel = koinViewModel { parametersOf(entryId) }
                 )
             }
-            entry<Route.Reading> {
+            entry<Route.Reading> { entryId ->
                 ReadingScreen(
                     navigateToHome = {
                         backStack.clear()
                         backStack.add(Route.Home)
                                      },
-                    navigateToInfo = { backStack[backStack.lastIndex] = Route.Info(it) }
+                    navigateToInfo = { backStack[backStack.lastIndex] = Route.Info(it) },
+                    viewModel = koinViewModel { parametersOf(entryId) }
                 )
             }
         }
