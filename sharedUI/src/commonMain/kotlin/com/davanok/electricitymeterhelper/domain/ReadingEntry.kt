@@ -4,8 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ReadingEntry(
-    val apartment: Int,
-    val owner: String,
+    val apartment: Apartment,
     val previousValue: Int,
     val currentValue: Int
 )

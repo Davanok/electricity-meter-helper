@@ -26,7 +26,7 @@ fun NavigationGraph(
             entry<Route.Home> {
                 HomeScreen(
                     navigateToInfo = { backStack.add(Route.Info(it)) },
-                    navigateToReading = { backStack.add(Route.Reading(Uuid.random())) },
+                    navigateToReading = { backStack.add(Route.Reading(null)) },
                     viewModel = koinViewModel()
                 )
             }

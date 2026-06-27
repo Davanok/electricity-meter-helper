@@ -2,4 +2,11 @@
     <string name="app_name">Electricity meter helper</string>
 
     <string name="add_reading">Add reading</string>
+    <string name="previous_value">Previous value: %1$d</string>
+    <string name="confirm">Confirm</string>
+    <string name="finish_text">Finished</string>
+    <string name="go_home_button_text">Go home</string>
+    <string name="go_info_button_text">Go info</string>
+    <string name="reading_data">Reading data</string>
+    <string name="back">Back</string>
 </resources>
