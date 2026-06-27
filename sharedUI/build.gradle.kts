@@ -53,6 +53,7 @@ kotlin {
 
             implementation(libs.bundles.koin)
             implementation(libs.kotlinx.io)
+            implementation(libs.kotlinx.datetime)
         }
 
         commonTest.dependencies {

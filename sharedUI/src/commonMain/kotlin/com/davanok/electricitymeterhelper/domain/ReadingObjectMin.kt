@@ -1,11 +1,11 @@
 package com.davanok.electricitymeterhelper.domain
 
+import kotlinx.datetime.LocalDate
 import kotlinx.serialization.Serializable
-import kotlin.time.Instant
 import kotlin.uuid.Uuid
 
 @Serializable
 data class ReadingObjectMin(
     val id: Uuid,
-    val date: Instant,
+    val date: LocalDate,
 )
