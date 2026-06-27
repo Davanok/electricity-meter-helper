@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Electricity meter helper</string>
+
+    <string name="add_reading">Add reading</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.davanok.electricitymeterhelper
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.davanok.electricitymeterhelper.di.appModule
@@ -26,12 +25,9 @@ fun App(
             )
         }
     ) {
-
-    }
-    AppTheme(onThemeChanged) {
-        Scaffold { paddingValues ->
+        AppTheme(onThemeChanged) {
             NavigationGraph(
-                modifier = Modifier.padding(paddingValues)
+                modifier = Modifier.fillMaxSize()
             )
         }
     }

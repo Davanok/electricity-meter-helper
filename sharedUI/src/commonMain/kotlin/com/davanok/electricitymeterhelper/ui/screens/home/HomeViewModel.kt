@@ -18,26 +18,28 @@ class HomeViewModel(
         loadReadingObjects()
     }
 
-    fun loadReadingObjects() = viewModelScope.launch {
-        _uiState.update { it.copy(isLoading = true) }
+    fun loadReadingObjects() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
 
-        repository.getObjectsMin().fold(
-            onSuccess = { entries ->
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        entries = entries
-                    )
+            repository.getObjectsMin().fold(
+                onSuccess = { entries ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            entries = entries
+                        )
+                    }
+                },
+                onFailure = { thr ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            errorMessage = thr.message
+                        )
+                    }
                 }
-            },
-            onFailure = { thr ->
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        errorMessage = thr.message
-                    )
-                }
-            }
-        )
+            )
+        }
     }
 }
