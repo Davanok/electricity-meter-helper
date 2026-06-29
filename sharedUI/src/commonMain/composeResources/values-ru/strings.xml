@@ -1,0 +1,68 @@
+<resources>
+
+    <string name="app_name">Помощник учета электроэнергии</string>
+
+    <!-- Navigation / actions -->
+    <string name="add_reading">Добавить показание</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="back">Назад</string>
+    <string name="edit">Редактировать</string>
+    <string name="export">Экспорт</string>
+    <string name="reload_items">Обновить</string>
+
+    <!-- Navigation buttons -->
+    <string name="go_home_button_text">На главную</string>
+    <string name="go_info_button_text">Просмотр деталей</string>
+
+    <!-- Loading / empty states -->
+    <string name="loading">Загрузка…</string>
+    <string name="no_data">Нет данных</string>
+    <string name="no_reading_entries">Нет показаний</string>
+
+    <string name="readings_empty_title">Пока нет показаний</string>
+    <string name="readings_empty_subtitle">Добавьте первое показание счетчика электроэнергии, чтобы начать.</string>
+    <string name="add_first_reading">Добавить первое показание</string>
+
+    <!-- Reading data -->
+    <string name="reading_data">Данные показаний</string>
+    <string name="readings_count">%1$d показаний</string>
+    <string name="output_filename">reading_data_%1$s.csv</string>
+
+    <!-- Meter values -->
+    <string name="previous">Предыдущее</string>
+    <string name="current">Текущее</string>
+    <string name="previous_value">Предыдущее значение: %1$d</string>
+    <string name="new_reading">Новое показание</string>
+    <string name="enter_kwh">Введите кВт⋅ч</string>
+    <string name="kwh_unit">кВт⋅ч</string>
+
+    <!-- Consumption changes -->
+    <string name="consumption_increase">Потребление увеличилось</string>
+    <string name="consumption_decrease">Потребление уменьшилось</string>
+    <string name="consumption_unchanged">Потребление не изменилось</string>
+
+    <!-- Delta indicators -->
+    <string name="delta_increase">Увеличение</string>
+    <string name="delta_decrease">Уменьшение</string>
+    <string name="delta_no_change">Без изменений</string>
+
+    <string name="delta_up">▲ %1$d</string>
+    <string name="delta_down">▼ %1$d</string>
+    <string name="delta_zero">— 0</string>
+
+    <!-- Warnings / actions -->
+    <string name="lower_than_previous_warning">
+        Новое показание меньше предыдущего. Пожалуйста, проверьте данные счетчика.
+    </string>
+    <string name="skip">Пропустить</string>
+    <string name="save_anyway">Сохранить все равно</string>
+
+    <!-- Info -->
+    <string name="info_screen_title">Детали показаний</string>
+    <string name="apartment">Квартира</string>
+    <string name="tap_to_view_details">Нажмите, чтобы посмотреть детали</string>
+
+    <!-- Completion -->
+    <string name="all_done">Готово</string>
+    <string name="finish_text">%1$d показаний завершено</string>
+</resources>
