@@ -2,20 +2,18 @@ package com.davanok.electricitymeterhelper.ui.screens.info
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.softwork.serialization.csv.CSVFormat
 import com.davanok.electricitymeterhelper.domain.ReadingObjectsRepository
 import com.davanok.electricitymeterhelper.domain.SaveReadingObjectRepository
+import com.davanok.electricitymeterhelper.utils.DateFormat
+import electricitymeterhelper.sharedui.generated.resources.Res
+import electricitymeterhelper.sharedui.generated.resources.output_filename
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.uuid.Uuid
-import com.davanok.electricitymeterhelper.platform.saveFile
-import com.davanok.electricitymeterhelper.utils.DateFormat
-import electricitymeterhelper.sharedui.generated.resources.Res
-import electricitymeterhelper.sharedui.generated.resources.output_filename
 import kotlinx.datetime.format
 import org.jetbrains.compose.resources.getString
+import kotlin.uuid.Uuid
 
 class InfoViewModel(
     private val entryId: Uuid,
