@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -38,6 +39,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -86,10 +88,7 @@ fun ReadingScreen(
     Content(
         uiState = uiState,
         moveToItem = viewModel::moveToItem,
-        setValue = { index, value ->
-            viewModel.setReadingValue(index, value)
-            viewModel.moveToItem(index + 1)
-        },
+        setValue = viewModel::setReadingValue,
         goToInfo = { viewModel.saveData { navigateToInfo(it) } },
         goBack = { viewModel.saveData { navigateBack() } },
         modifier = Modifier.fillMaxSize()
@@ -203,6 +202,7 @@ private fun ReadingContent(
             ApartmentEditable(
                 value = currentEntry.currentValue,
                 onValueChange = { setValue(currentIndex, it) },
+                onNext = { moveToItem(currentIndex + 1) },
                 info = currentEntry,
                 isValueSuspect = isValueSuspect,
                 modifier = Modifier
@@ -326,6 +326,7 @@ private fun ApartmentIndicator(
 private fun ApartmentEditable(
     value: Int,
     onValueChange: (Int) -> Unit,
+    onNext: () -> Unit,
     info: ReadingEntry,
     isValueSuspect: Boolean,
     modifier: Modifier = Modifier
@@ -379,7 +380,8 @@ private fun ApartmentEditable(
             // New reading input
             OutlinedTextField(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .onFocusChanged { if (!it.isFocused) onNext() },
                 value = value.toString(),
                 onValueChange = { input ->
                     input.toIntOrNull()?.takeIf { it >= 0 }?.let(onValueChange)
@@ -411,6 +413,7 @@ private fun ApartmentEditable(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
                 ),
+                keyboardActions = KeyboardActions { onNext() },
                 singleLine = true
             )
         }
