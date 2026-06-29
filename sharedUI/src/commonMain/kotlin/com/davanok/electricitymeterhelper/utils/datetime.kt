@@ -5,8 +5,8 @@ import kotlinx.datetime.format.char
 
 val DateFormat = LocalDate.Format {
     day()
-    char('.')
+    char('-')
     monthNumber()
-    char('.')
+    char('-')
     year()
 }

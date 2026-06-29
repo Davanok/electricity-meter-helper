@@ -57,7 +57,7 @@ fun InfoScreen(
         uiState = uiState,
         onBack = navigateBack,
         onEdit = navigateToReading,
-        onExport = { TODO() },
+        onExport = viewModel::saveFile,
         modifier = Modifier.fillMaxSize()
     )
 }

@@ -10,6 +10,6 @@ import kotlin.uuid.Uuid
 
 fun viewModelsModule() = module {
     viewModelOf(::HomeViewModel)
-    viewModel<InfoViewModel> { (entryId: Uuid) -> InfoViewModel(entryId, get()) }
+    viewModel<InfoViewModel> { (entryId: Uuid) -> InfoViewModel(entryId, get(), get()) }
     viewModel<ReadingViewModel> { (entryId: Uuid?) -> ReadingViewModel(entryId, get()) }
 }
