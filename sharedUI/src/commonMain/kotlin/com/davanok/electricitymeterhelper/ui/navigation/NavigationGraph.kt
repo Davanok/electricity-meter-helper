@@ -3,7 +3,9 @@ package com.davanok.electricitymeterhelper.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.davanok.electricitymeterhelper.ui.screens.home.HomeScreen
 import com.davanok.electricitymeterhelper.ui.screens.info.InfoScreen
@@ -22,11 +24,15 @@ fun NavigationGraph(
         modifier = modifier,
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
+        entryDecorators = listOf(
+            rememberSaveableStateHolderNavEntryDecorator(),
+            rememberViewModelStoreNavEntryDecorator()
+        ),
         entryProvider = entryProvider {
             entry<Route.Home> {
                 HomeScreen(
                     navigateToInfo = { backStack.add(Route.Info(it)) },
-                    navigateToReading = { backStack.add(Route.Reading(null)) },
+                    navigateToReading = { backStack.add(Route.Reading(Uuid.random())) },
                     viewModel = koinViewModel()
                 )
             }
@@ -37,14 +43,14 @@ fun NavigationGraph(
                         backStack.add(Route.Home)
                     },
                     navigateToReading = { backStack.add(Route.Reading(entryId)) },
-                    viewModel = koinViewModel { parametersOf(entryId) }
+                    viewModel = koinViewModel(key = entryId.toString()) { parametersOf(entryId) }
                 )
             }
             entry<Route.Reading> { (entryId: Uuid?) ->
                 ReadingScreen(
                     navigateBack = { backStack.removeLastOrNull() },
                     navigateToInfo = { backStack[backStack.lastIndex] = Route.Info(it) },
-                    viewModel = koinViewModel { parametersOf(entryId) }
+                    viewModel = koinViewModel(key = entryId.toString()) { parametersOf(entryId) }
                 )
             }
         }

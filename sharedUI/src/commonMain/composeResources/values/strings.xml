@@ -31,7 +31,7 @@
     <!-- Meter values -->
     <string name="previous">Previous</string>
     <string name="current">Current</string>
-    <string name="previous_value">Previous value: %1$d</string>
+    <string name="previous_value">Previous value:</string>
     <string name="new_reading">New reading</string>
     <string name="enter_kwh">Enter kWh</string>
     <string name="kwh_unit">kWh</string>
