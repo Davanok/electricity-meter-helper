@@ -32,7 +32,7 @@ fun NavigationGraph(
             }
             entry<Route.Info> { (entryId: Uuid) ->
                 InfoScreen(
-                    navigateToHome = {
+                    navigateBack = {
                         backStack.clear()
                         backStack.add(Route.Home)
                     },
@@ -42,10 +42,7 @@ fun NavigationGraph(
             }
             entry<Route.Reading> { entryId ->
                 ReadingScreen(
-                    navigateToHome = {
-                        backStack.clear()
-                        backStack.add(Route.Home)
-                                     },
+                    navigateBack = { backStack.removeLastOrNull() },
                     navigateToInfo = { backStack[backStack.lastIndex] = Route.Info(it) },
                     viewModel = koinViewModel { parametersOf(entryId) }
                 )

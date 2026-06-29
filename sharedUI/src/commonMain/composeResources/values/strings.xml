@@ -9,4 +9,8 @@
     <string name="go_info_button_text">Go info</string>
     <string name="reading_data">Reading data</string>
     <string name="back">Back</string>
+    <string name="export">Export</string>
+    <string name="edit">Edit</string>
+    <string name="info_screen_title">Info</string>
+    <string name="no_reading_entries">No reading entries</string>
 </resources>

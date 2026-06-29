@@ -61,7 +61,7 @@ import kotlin.uuid.Uuid
 
 @Composable
 fun ReadingScreen(
-    navigateToHome: () -> Unit,
+    navigateBack: () -> Unit,
     navigateToInfo: (entryId: Uuid) -> Unit,
     viewModel: ReadingViewModel
 ) {
@@ -83,7 +83,7 @@ fun ReadingScreen(
             viewModel.moveToItem(index + 1)
         },
         goToInfo = { viewModel.saveData { navigateToInfo(it) } },
-        goToHome = { viewModel.saveData { navigateToHome() } },
+        goBack = { viewModel.saveData { navigateBack() } },
         modifier = Modifier.fillMaxSize()
     )
 }
@@ -93,7 +93,7 @@ private fun Content(
     uiState: ReadingScreenUiState,
     moveToItem: (Int) -> Unit,
     setValue: (Int, Int) -> Unit,
-    goToHome: () -> Unit,
+    goBack: () -> Unit,
     goToInfo: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -103,7 +103,7 @@ private fun Content(
             TopAppBar(
                 title = { Text(text = stringResource(Res.string.reading_data)) },
                 navigationIcon = {
-                    IconButton(onClick = goToHome) {
+                    IconButton(onClick = goBack) {
                         Icon(
                             painter = painterResource(Res.drawable.ic_back),
                             contentDescription = stringResource(Res.string.back)
@@ -126,7 +126,7 @@ private fun Content(
                 modifier = Modifier
                     .padding(paddingValues)
                     .fillMaxSize(),
-                goToHome = goToHome,
+                goToHome = goBack,
                 goToInfo = goToInfo
             )
 
