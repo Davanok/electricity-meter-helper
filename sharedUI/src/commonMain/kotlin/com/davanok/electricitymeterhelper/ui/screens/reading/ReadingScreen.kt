@@ -103,7 +103,7 @@ fun ReadingScreen(
 private fun Content(
     uiState: ReadingScreenUiState,
     moveToItem: (Int) -> Unit,
-    setValue: (Int, Int) -> Unit,
+    setValue: (Int) -> Unit,
     goBack: () -> Unit,
     goToInfo: () -> Unit,
     modifier: Modifier = Modifier
@@ -163,14 +163,14 @@ private fun Content(
 private fun ReadingContent(
     uiState: ReadingScreenUiState,
     moveToItem: (Int) -> Unit,
-    setValue: (Int, Int) -> Unit,
+    setValue: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val currentIndex = uiState.currentReadingEntryIndex
     val totalCount = uiState.entries.size
     val currentEntry = uiState.entries[currentIndex]
-    val isValueSuspect = currentEntry.currentValue > 0 &&
-            currentEntry.currentValue < currentEntry.previousValue
+    val currentValue = uiState.currentValue
+    val isValueSuspect = currentValue > 0 && currentValue < currentEntry.previousValue
 
     Column(modifier = modifier) {
 
@@ -200,8 +200,8 @@ private fun ReadingContent(
                 .weight(1f)
         ) {
             ApartmentEditable(
-                value = currentEntry.currentValue,
-                onValueChange = { setValue(currentIndex, it) },
+                value = currentValue,
+                onValueChange = { setValue(it) },
                 onNext = { moveToItem(currentIndex + 1) },
                 info = currentEntry,
                 isValueSuspect = isValueSuspect,
