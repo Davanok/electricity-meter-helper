@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -37,9 +36,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
@@ -65,7 +61,6 @@ import electricitymeterhelper.sharedui.generated.resources.new_reading
 import electricitymeterhelper.sharedui.generated.resources.previous_value
 import electricitymeterhelper.sharedui.generated.resources.reading_data
 import electricitymeterhelper.sharedui.generated.resources.save_anyway
-import electricitymeterhelper.sharedui.generated.resources.skip
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import kotlin.uuid.Uuid
@@ -178,8 +173,6 @@ private fun ReadingContent(
     val isValueSuspect = currentEntry.currentValue > 0 &&
             currentEntry.currentValue < currentEntry.previousValue
 
-    var currentValue by remember(currentIndex) { mutableStateOf(currentEntry.currentValue) }
-
     Column(modifier = modifier) {
 
         // Chip strip
@@ -208,9 +201,8 @@ private fun ReadingContent(
                 .weight(1f)
         ) {
             ApartmentEditable(
-                value = currentValue,
-                onValueChange = { currentValue = it },
-                onSetValue = { setValue(currentIndex, currentValue) },
+                value = currentEntry.currentValue,
+                onValueChange = { setValue(currentIndex, it) },
                 info = currentEntry,
                 isValueSuspect = isValueSuspect,
                 modifier = Modifier
@@ -224,8 +216,7 @@ private fun ReadingContent(
         // Bottom action row
         BottomActions(
             isValueSuspect = isValueSuspect,
-            onSkip = { moveToItem(currentIndex + 1) },
-            onConfirm = { setValue(currentIndex, currentValue) },
+            onNext = { moveToItem(currentIndex + 1) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
@@ -335,7 +326,6 @@ private fun ApartmentIndicator(
 private fun ApartmentEditable(
     value: Int,
     onValueChange: (Int) -> Unit,
-    onSetValue: () -> Unit,
     info: ReadingEntry,
     isValueSuspect: Boolean,
     modifier: Modifier = Modifier
@@ -421,15 +411,6 @@ private fun ApartmentEditable(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
                 ),
-                keyboardActions = KeyboardActions { onSetValue() },
-                trailingIcon = {
-                    IconButton(onClick = onSetValue) {
-                        Icon(
-                            painter = painterResource(Res.drawable.ic_check),
-                            contentDescription = stringResource(Res.string.confirm)
-                        )
-                    }
-                },
                 singleLine = true
             )
         }
@@ -443,33 +424,20 @@ private fun ApartmentEditable(
 @Composable
 private fun BottomActions(
     isValueSuspect: Boolean,
-    onSkip: () -> Unit,
-    onConfirm: () -> Unit,
+    onNext: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
+    Button(
+        onClick = onNext,
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        colors = if (isValueSuspect)
+            ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.error,
+                contentColor = MaterialTheme.colorScheme.onError
+            )
+        else ButtonDefaults.buttonColors()
     ) {
-        OutlinedButton(
-            onClick = onSkip,
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(stringResource(Res.string.skip))
-        }
-
-        Button(
-            onClick = onConfirm,
-            modifier = Modifier.weight(2f),
-            colors = if (isValueSuspect)
-                ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.error,
-                    contentColor = MaterialTheme.colorScheme.onError
-                )
-            else ButtonDefaults.buttonColors()
-        ) {
-            Text(if (isValueSuspect) stringResource(Res.string.save_anyway) else stringResource(Res.string.confirm))
-        }
+        Text(if (isValueSuspect) stringResource(Res.string.save_anyway) else stringResource(Res.string.confirm))
     }
 }
 
