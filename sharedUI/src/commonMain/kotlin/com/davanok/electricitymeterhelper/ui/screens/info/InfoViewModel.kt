@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.davanok.electricitymeterhelper.domain.ReadingObjectsRepository
 import com.davanok.electricitymeterhelper.domain.SaveReadingObjectRepository
-import com.davanok.electricitymeterhelper.utils.DateFormat
+import com.davanok.electricitymeterhelper.utils.DateTimeFormat
 import electricitymeterhelper.sharedui.generated.resources.Res
 import electricitymeterhelper.sharedui.generated.resources.output_filename
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -53,7 +53,7 @@ class InfoViewModel(
     fun saveFile() {
         val obj = uiState.value.data ?: return
         viewModelScope.launch {
-            val dateString = obj.date.format(DateFormat)
+            val dateString = obj.date.format(DateTimeFormat)
             val filename = getString(Res.string.output_filename, dateString)
             savingRepository.saveReadingObject(filename, obj)
         }

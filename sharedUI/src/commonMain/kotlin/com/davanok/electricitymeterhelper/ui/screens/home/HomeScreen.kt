@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.davanok.electricitymeterhelper.domain.ReadingObjectMin
 import com.davanok.electricitymeterhelper.ui.components.SnackbarMessageHandler
-import com.davanok.electricitymeterhelper.utils.DateFormat
+import com.davanok.electricitymeterhelper.utils.DateTimeFormat
 import electricitymeterhelper.sharedui.generated.resources.Res
 import electricitymeterhelper.sharedui.generated.resources.add_first_reading
 import electricitymeterhelper.sharedui.generated.resources.add_reading
@@ -159,7 +159,7 @@ private fun ReadingCard(
     modifier: Modifier = Modifier
 ) {
     val date = remember(item.date) {
-        item.date.format(DateFormat)
+        item.date.format(DateTimeFormat)
     }
 
     ElevatedCard(

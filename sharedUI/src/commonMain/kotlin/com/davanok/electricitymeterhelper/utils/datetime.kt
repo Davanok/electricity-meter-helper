@@ -1,12 +1,16 @@
 package com.davanok.electricitymeterhelper.utils
 
-import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.format.char
 
-val DateFormat = LocalDate.Format {
+val DateTimeFormat = LocalDateTime.Format {
     day()
     char('-')
     monthNumber()
     char('-')
     year()
+    char(' ')
+    hour()
+    char(':')
+    minute()
 }

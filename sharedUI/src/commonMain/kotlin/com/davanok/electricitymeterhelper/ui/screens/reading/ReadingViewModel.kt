@@ -113,7 +113,7 @@ class ReadingViewModel(
     fun saveData(onSuccess: (Uuid) -> Unit = {}) = viewModelScope.launch {
         val obj = ReadingObject(
             id = entryId,
-            date = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
+            date = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
             entries = uiState.value.entries
         )
         repository.setObject(obj).fold(

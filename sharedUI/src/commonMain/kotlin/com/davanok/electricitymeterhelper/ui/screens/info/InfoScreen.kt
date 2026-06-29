@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.davanok.electricitymeterhelper.domain.ReadingEntry
 import com.davanok.electricitymeterhelper.ui.components.SnackbarMessageHandler
-import com.davanok.electricitymeterhelper.utils.DateFormat
+import com.davanok.electricitymeterhelper.utils.DateTimeFormat
 import electricitymeterhelper.sharedui.generated.resources.Res
 import electricitymeterhelper.sharedui.generated.resources.back
 import electricitymeterhelper.sharedui.generated.resources.current
@@ -45,7 +45,7 @@ import electricitymeterhelper.sharedui.generated.resources.ic_export
 import electricitymeterhelper.sharedui.generated.resources.info_screen_title
 import electricitymeterhelper.sharedui.generated.resources.no_reading_entries
 import electricitymeterhelper.sharedui.generated.resources.previous_value
-import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.format
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -141,14 +141,14 @@ private fun Content(
 
 @Composable
 private fun InfoTopBar(
-    date: LocalDate?,
+    date: LocalDateTime?,
     onBack: () -> Unit,
     onEdit: () -> Unit,
     onExport: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     modifier: Modifier = Modifier
 ) {
-    val titleText = remember(date) { date?.format(DateFormat) }
+    val titleText = remember(date) { date?.format(DateTimeFormat) }
     TopAppBar(
         modifier = modifier,
         scrollBehavior = scrollBehavior,
