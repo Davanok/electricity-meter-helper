@@ -42,7 +42,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -179,6 +178,8 @@ private fun ReadingContent(
     val isValueSuspect = currentEntry.currentValue > 0 &&
             currentEntry.currentValue < currentEntry.previousValue
 
+    var currentValue by remember(currentIndex) { mutableStateOf(currentEntry.currentValue) }
+
     Column(modifier = modifier) {
 
         // Chip strip
@@ -207,9 +208,11 @@ private fun ReadingContent(
                 .weight(1f)
         ) {
             ApartmentEditable(
+                value = currentValue,
+                onValueChange = { currentValue = it },
+                onSetValue = { setValue(currentIndex, currentValue) },
                 info = currentEntry,
                 isValueSuspect = isValueSuspect,
-                onSetValue = { setValue(currentIndex, it) },
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
                     .padding(horizontal = 16.dp)
@@ -222,11 +225,7 @@ private fun ReadingContent(
         BottomActions(
             isValueSuspect = isValueSuspect,
             onSkip = { moveToItem(currentIndex + 1) },
-            onConfirm = {
-                // Trigger confirm via the editable card's latest value;
-                // the actual value is read from shared state in the ViewModel.
-                moveToItem(currentIndex + 1)
-            },
+            onConfirm = { setValue(currentIndex, currentValue) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
@@ -334,24 +333,13 @@ private fun ApartmentIndicator(
 
 @Composable
 private fun ApartmentEditable(
+    value: Int,
+    onValueChange: (Int) -> Unit,
+    onSetValue: () -> Unit,
     info: ReadingEntry,
     isValueSuspect: Boolean,
-    onSetValue: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var rawValue by remember(info.apartment.name) {
-        mutableStateOf(if (info.currentValue > 0) info.currentValue.toString() else "")
-    }
-    var isFocused by remember { mutableStateOf(false) }
-
-    LaunchedEffect(info.currentValue) {
-        if (!isFocused) {
-            rawValue = if (info.currentValue > 0) info.currentValue.toString() else ""
-        }
-    }
-
-    val parsedValue = rawValue.toIntOrNull()
-
     ElevatedCard(modifier = modifier) {
         Column(modifier = Modifier.padding(16.dp)) {
 
@@ -401,18 +389,10 @@ private fun ApartmentEditable(
             // New reading input
             OutlinedTextField(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .onFocusChanged { focusState ->
-                        isFocused = focusState.isFocused
-                        // Select-all on focus: done via TextFieldValue if needed;
-                        // here we clear to let the user type fresh
-                    },
-                value = rawValue,
+                    .fillMaxWidth(),
+                value = value.toString(),
                 onValueChange = { input ->
-                    // Allow digits only; accept empty (cleared field)
-                    if (input.isEmpty() || input.toIntOrNull() != null) {
-                        rawValue = input
-                    }
+                    input.toIntOrNull()?.takeIf { it >= 0 }?.let(onValueChange)
                 },
                 label = { Text(text = stringResource(Res.string.new_reading)) },
                 placeholder = { Text(stringResource(Res.string.enter_kwh)) },
@@ -441,14 +421,9 @@ private fun ApartmentEditable(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
                 ),
-                keyboardActions = KeyboardActions {
-                    parsedValue?.let { onSetValue(it) }
-                },
+                keyboardActions = KeyboardActions { onSetValue() },
                 trailingIcon = {
-                    IconButton(
-                        onClick = { parsedValue?.let { onSetValue(it) } },
-                        enabled = parsedValue != null
-                    ) {
+                    IconButton(onClick = onSetValue) {
                         Icon(
                             painter = painterResource(Res.drawable.ic_check),
                             contentDescription = stringResource(Res.string.confirm)
