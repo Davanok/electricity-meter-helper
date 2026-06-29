@@ -85,23 +85,27 @@ class ReadingViewModel(
             )
         }
     }
-    fun setReadingValue(index: Int, value: Int) {
-        _uiState.update {
-            val entries = it.entries.toMutableList()
-            entries[index] = entries[index].copy(currentValue = value)
-            it.copy(entries = entries)
-        }
+    fun setReadingValue(value: Int) {
+        _uiState.update { it.copy(currentValue = value) }
     }
     fun moveToItem(index: Int) {
         _uiState.update {
-            it.copy(currentReadingEntryIndex = index)
+            val entries = it.entries.toMutableList()
+            val updatedEntry = entries[it.currentReadingEntryIndex].copy(currentValue = it.currentValue)
+            entries[index] = updatedEntry
+
+            it.copy(
+                entries = entries,
+                currentReadingEntryIndex = index,
+                currentValue = it.entries[index].currentValue
+            )
         }
     }
 
     private fun autoSaveTimer() = viewModelScope.launch {
         while (viewModelScope.isActive) {
             saveData()
-            delay(1.seconds)
+            delay(10.seconds)
         }
     }
 

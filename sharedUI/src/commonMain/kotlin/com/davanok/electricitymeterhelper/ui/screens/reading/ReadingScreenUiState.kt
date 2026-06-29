@@ -9,4 +9,5 @@ data class ReadingScreenUiState(
     val errorMessage: String? = null,
     val entries: List<ReadingEntry> = emptyList(),
     val currentReadingEntryIndex: Int = 0,
+    val currentValue: Int = 0
 )
