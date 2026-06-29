@@ -30,7 +30,7 @@ string|new_reading|TmV3IHJlYWRpbmc=
 string|no_data|Tm8gZGF0YSBhdmFpbGFibGU=
 string|no_reading_entries|Tm8gcmVhZGluZ3MgYXZhaWxhYmxl
 string|output_filename|cmVhZGluZ19kYXRhXyUxJHMuY3N2
-string|previous_value|UHJldmlvdXMgdmFsdWU6ICUxJGQ=
+string|previous_value|UHJldmlvdXMgdmFsdWU6
 string|previous|UHJldmlvdXM=
 string|reading_data|UmVhZGluZyBkYXRh
 string|readings_count|JTEkZCByZWFkaW5ncw==
