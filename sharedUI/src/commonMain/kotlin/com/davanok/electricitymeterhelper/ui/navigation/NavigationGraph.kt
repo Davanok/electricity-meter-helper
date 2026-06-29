@@ -46,7 +46,7 @@ fun NavigationGraph(
                     viewModel = koinViewModel(key = entryId.toString()) { parametersOf(entryId) }
                 )
             }
-            entry<Route.Reading> { (entryId: Uuid?) ->
+            entry<Route.Reading> { (entryId: Uuid) ->
                 ReadingScreen(
                     navigateBack = { backStack.removeLastOrNull() },
                     navigateToInfo = { backStack[backStack.lastIndex] = Route.Info(it) },
