@@ -39,7 +39,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -380,8 +379,7 @@ private fun ApartmentEditable(
             // New reading input
             OutlinedTextField(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .onFocusChanged { if (!it.isFocused) onNext() },
+                    .fillMaxWidth(),
                 value = value.toString(),
                 onValueChange = { input ->
                     input.toIntOrNull()?.takeIf { it >= 0 }?.let(onValueChange)
