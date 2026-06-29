@@ -19,10 +19,9 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.uuid.Uuid
 
 class ReadingViewModel(
-    private val entryId: Uuid?,
+    private val entryId: Uuid,
     private val repository: ReadingObjectsRepository
 ) : ViewModel() {
-    private val readingObjectId = entryId ?: Uuid.random()
     private val _uiState = MutableStateFlow(ReadingScreenUiState())
     val uiState = _uiState.asStateFlow()
 
@@ -33,17 +32,6 @@ class ReadingViewModel(
 
     private fun loadData() = viewModelScope.launch {
         _uiState.update { it.copy(isLoading = true) }
-
-        if (entryId == null) {
-            val entries = generateReadingEntries()
-            _uiState.update {
-                it.copy(
-                    isLoading = false,
-                    entries = entries
-                )
-            }
-            return@launch
-        }
 
         repository.getObject(entryId).fold(
             onSuccess = { obj ->
@@ -119,12 +107,12 @@ class ReadingViewModel(
 
     fun saveData(onSuccess: (Uuid) -> Unit = {}) = viewModelScope.launch {
         val obj = ReadingObject(
-            id = readingObjectId,
+            id = entryId,
             date = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
             entries = uiState.value.entries
         )
         repository.setObject(obj).fold(
-            onSuccess = { onSuccess(readingObjectId) },
+            onSuccess = { onSuccess(entryId) },
             onFailure = { thr -> _uiState.update { it.copy(errorMessage = thr.message) } }
         )
     }

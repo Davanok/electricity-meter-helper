@@ -10,5 +10,5 @@ sealed interface Route {
     @Serializable
     data class Info(val id: Uuid) : Route
     @Serializable
-    data class Reading(val entryId: Uuid?) : Route
+    data class Reading(val entryId: Uuid) : Route
 }

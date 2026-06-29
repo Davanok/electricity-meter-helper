@@ -33,8 +33,8 @@
     <string name="current">Текущее</string>
     <string name="previous_value">Предыдущее значение: %1$d</string>
     <string name="new_reading">Новое показание</string>
-    <string name="enter_kwh">Введите кВт⋅ч</string>
-    <string name="kwh_unit">кВт⋅ч</string>
+    <string name="enter_kwh">Введите кВтч</string>
+    <string name="kwh_unit">кВтч</string>
 
     <!-- Consumption changes -->
     <string name="consumption_increase">Потребление увеличилось</string>
