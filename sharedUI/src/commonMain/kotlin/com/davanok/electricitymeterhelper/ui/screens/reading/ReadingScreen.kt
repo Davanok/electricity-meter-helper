@@ -3,6 +3,7 @@ package com.davanok.electricitymeterhelper.ui.screens.reading
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -268,13 +269,14 @@ private fun ApartmentIndicator(
 ) {
     val lazyRowState = rememberLazyListState()
     LaunchedEffect(currentIndex) {
-        lazyRowState.requestScrollToItem(currentIndex)
+        lazyRowState.requestScrollToItem(currentIndex, -100)
     }
 
     LazyRow(
-        modifier = modifier.padding(horizontal = 8.dp),
+        modifier = modifier,
         state = lazyRowState,
-        horizontalArrangement = Arrangement.spacedBy(6.dp)
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        contentPadding = PaddingValues(horizontal = 8.dp)
     ) {
         itemsIndexed(
             items = apartments,
